@@ -1,0 +1,20 @@
+{
+  "name": "receipt-split",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GenLayer intelligent contract: one receipt, one deterministic split, settled by consensus on the amounts.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "python -m pytest tests/direct -q",
+    "deploy": "node scripts/deploy_studionet.js",
+    "e2e": "node scripts/e2e_studionet.js"
+  },
+  "keywords": ["genlayer", "intelligent-contracts", "receipt", "split"],
+  "license": "MIT",
+  "dependencies": {
+    "genlayer-js": "^1.1.8"
+  }
+}
