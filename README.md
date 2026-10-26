@@ -105,6 +105,40 @@ small enough that a validator reading it cannot drift.
 | write | `open_bill`, `amend_items`, `reparse`, `settle` |
 | view | `get_bill`, `preview_split`, `bills_of`, `bill_count`, `stats` |
 
+## Live
+
+- Contract (Studio Network): `0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA`
+- Explorer: https://explorer-studio.genlayer.com/address/0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA
+
+## One receipt, three people, on the live contract
+
+A real deli receipt, read by the validator set, with the split computed from the lines it reported:
+
+```
+THE CORNER DELI
+Table 6      server: Marta
+2x Espresso ........ 7.00
+1x Cheesecake ...... 6.50
+3x Club Sandwich .. 12.75
+Total .............. 26.25
+```
+
+| what | transaction |
+| --- | --- |
+| deploy `0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA` | `0xdff601aa4acd2e56c6cd25d031c8330db20ec7a991298da8ab7ab7978ca40834` |
+| `open_bill` — the reading round, items and total in whole cents | `0xf53176a8111c8a33866197dce5ae3f467ed01bcc53e975678aa2b0d21959c6d0` |
+| a guest calls `settle` — refused, the bill is not theirs | `0xcef74f9f1e4e32e37490cf9154e732ba16a252efee9ac8b323a7285efe647da1` |
+| the owner calls `settle` — shares frozen | `0xf8d4ce0d38b19c615c0506e170c56a2a46170d1c0a25ff6a039463e813b0aed3` |
+| the guest tries to `amend_items` the frozen bill — refused | `0x942e9a31bbdcd0cddd3edccf1c114002f1f5e6659e1e738f5694b83288c68d95` |
+
+The frozen split is `{"ana":876,"beto":875,"carla":874}` cents — 8.76 / 8.75 / 8.74, summing to 26.25, with the
+trailing cents carried by the people earliest in the bill:
+
+```
+'Espresso' is 7.00 over 3 people: 2.33 each leaves 1 cent, carried by ana
+'Cheesecake' is 6.50 over 3 people: 2.16 each leaves 2 cents, carried by ana, beto
+```
+
 ## Tests
 
 ```bash

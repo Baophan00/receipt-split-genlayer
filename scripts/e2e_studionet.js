@@ -71,7 +71,10 @@ function money(cents) {
 
 async function send(client, who, functionName, args) {
   console.log(`\n[${who}] ${functionName}(${args.map((a) => JSON.stringify(a).slice(0, 60)).join(", ")})`);
-  const hash = await client.writeContract({ address: ADDRESS, functionName, args, value: 0n });
+  const hash = await withRetry(
+    () => client.writeContract({ address: ADDRESS, functionName, args, value: 0n }),
+    "send"
+  );
   console.log(`  tx ${hash}`);
   const receipt = await withRetry(
     () => client.waitForTransactionReceipt({ hash, status: "FINALIZED", retries: 200, interval: 3000 }),

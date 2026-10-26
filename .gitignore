@@ -5,3 +5,6 @@ scripts/.e2e-keys.json
 .pytest_cache/
 __pycache__/
 *.pyc
+__pycache__/
+*.pyc
+scripts/.e2e-keys.json
