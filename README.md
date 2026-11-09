@@ -107,8 +107,8 @@ small enough that a validator reading it cannot drift.
 
 ## Live
 
-- Contract (Studio Network): `0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA`
-- Explorer: https://explorer-studio.genlayer.com/address/0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA
+- Contract (Studio Network): `0xC6A1Be075b34297E62b15F5BC673357C792BE12a`
+- Explorer: https://explorer-studio.genlayer.com/address/0xC6A1Be075b34297E62b15F5BC673357C792BE12a
 
 ## One receipt, three people, on the live contract
 
@@ -125,11 +125,11 @@ Total .............. 26.25
 
 | what | transaction |
 | --- | --- |
-| deploy `0x1B7eB510545C7413b11321DB24fd9B44dE0b02eA` | `0xdff601aa4acd2e56c6cd25d031c8330db20ec7a991298da8ab7ab7978ca40834` |
-| `open_bill` — the reading round, items and total in whole cents | `0xf53176a8111c8a33866197dce5ae3f467ed01bcc53e975678aa2b0d21959c6d0` |
-| a guest calls `settle` — refused, the bill is not theirs | `0xcef74f9f1e4e32e37490cf9154e732ba16a252efee9ac8b323a7285efe647da1` |
-| the owner calls `settle` — shares frozen | `0xf8d4ce0d38b19c615c0506e170c56a2a46170d1c0a25ff6a039463e813b0aed3` |
-| the guest tries to `amend_items` the frozen bill — refused | `0x942e9a31bbdcd0cddd3edccf1c114002f1f5e6659e1e738f5694b83288c68d95` |
+| deploy `0xC6A1Be075b34297E62b15F5BC673357C792BE12a` | `0x7a58f91dbc17d76a65602b3099f57efd5cd9f59dd7945660ba967b2be887e25c` |
+| `open_bill` — the reading round, items and total in whole cents | `0xd8795423f58537775b0568ca84a4d924b2a6c894a40e6d4264997822feeac60d` |
+| a guest calls `settle` — refused, the bill is not theirs | `0xe6d4699fa0486038e54acf8f8d9879823fcb562d1bac0583c3c4170ed733ad6d` |
+| the owner calls `settle` — shares frozen | `0x7441bf73f116268d16523f70d4414ddc33f94bc78b4085093c8903cb9a4d815d` |
+| the guest tries to `amend_items` the frozen bill — refused | `0x12e5e6fb20ac6e1b2a8714137c91809857f668016778017e4780f71ffb3d40e9` |
 
 The frozen split is `{"ana":876,"beto":875,"carla":874}` cents — 8.76 / 8.75 / 8.74, summing to 26.25, with the
 trailing cents carried by the people earliest in the bill:

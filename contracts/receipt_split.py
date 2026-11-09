@@ -54,9 +54,12 @@ TOTAL_SLACK_CENTS = 2   # rounding, not a missing item
 
 PRINCIPLE = (
     "Both answers must name the same number of items and, for the item in each\n"
-    "position, the same amount in cents. The wording of a name may differ (a receipt\n"
-    "prints abbreviations, one reader may expand them), but any amount that differs by\n"
-    "a single cent, or a different number of items, is not a match."
+    "position, the same amount in cents. They must also report the same stated total\n"
+    "in cents, or both report no total at all: the total is a number on the receipt,\n"
+    "not a guess, and a bill is only as good as the total it was read with. The\n"
+    "wording of a name may differ (a receipt prints abbreviations, one reader may\n"
+    "expand them), but any amount that differs by a single cent, a different number\n"
+    "of items, or a different stated total is not a match."
 )
 
 
@@ -283,11 +286,18 @@ class ReceiptSplit(gl.Contract):
         items = _checked_items(payload)
         stated = 0
         if isinstance(payload, dict):
-            stated = payload.get("total_cents") or 0
-        return items, int(stated)
+            raw_total = payload.get("total_cents")
+            if raw_total is not None:
+                if (
+                    isinstance(raw_total, bool)
+                    or not isinstance(raw_total, (int, float))
+                    or int(raw_total) != raw_total
+                ):
+                    raise gl.vm.UserError("the stated total is not a whole number of cents")
+                stated = int(raw_total)
+        return items, stated
 
-    @staticmethod
-    def _shape(bill: Bill, items: list, extra: dict) -> dict:
+    def _shape(self, bill: Bill, items: list, extra: dict) -> dict:
         out = {
             "bill_id": bill.id,
             "state": bill.state,
